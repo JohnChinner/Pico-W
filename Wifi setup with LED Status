@@ -1,0 +1,24 @@
+##You need to have a .py file on your pico called secrets with SSID and Password identified###
+## see guide here: https://www.tomshardware.com/how-to/connect-raspberry-pi-pico-w-to-the-internet ##
+
+import network
+import secrets  ##This is the place where wifi info is located
+import time
+from machine import Pin
+
+led = machine.Pin("LED", machine.Pin.OUT) # Sets up the LED 
+
+try:
+    led.off() ##Start with LED off
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    wlan.connect(secrets.SSID, secrets.PASSWORD)
+except:
+    led.off()
+    print("Failed")
+else:
+    print(wlan.isconnected())
+    led.on()
+    time.sleep(1)
+    while True:
+       ##Do Your Stuff here###
